@@ -17,7 +17,6 @@ const jwtOptions = {
 const jwtStrategy = new JwtStrategy(jwtOptions, (jwtPayload: any, done: any) => {
     if (jwtPayload.id && jwtPayload.exp > Date.now() / 1000) {
         if (jwtPayload.type == 'pxp-nd') {
-            console.log('pxp-nd');
             entities.User.findOne(jwtPayload.id as number).then((user: any) => {
                 if (user) {
                     done(null, user);
