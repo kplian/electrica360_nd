@@ -50,7 +50,7 @@ class Login extends Controller {
     async  local(params: Record<string, unknown>, manager: EntityManager): Promise<any> {
         let isValid = false;
         const user = await entities.User.findOne({ username: params.username as string });
-        
+        console.log(user);
         if (user) {
             isValid = validPassword(params.password as string, <string>user.hash, <string>user.salt);
         }

@@ -19,7 +19,7 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (jwtPayload: any, done: any) => 
         if (jwtPayload.type == 'pxp-nd') {
             entities.User.findOne(jwtPayload.id as number).then((user: any) => {
                 if (user) {
-                    done(null, user);
+                    done(null, {...user, type: jwtPayload.type });
                 } else {
                     done(null, false);
                 }
@@ -28,7 +28,7 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (jwtPayload: any, done: any) => 
         } else if (jwtPayload.type == 'pxp-old') {
             UserPxp.findOne(jwtPayload.id as number).then((user: any) => {
                 if (user) {
-                    done(null, user);
+                    done(null, {...user, type: jwtPayload.type });
                 } else {
                     done(null, false);
                 }
