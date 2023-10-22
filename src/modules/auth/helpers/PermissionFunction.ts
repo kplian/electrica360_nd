@@ -12,7 +12,21 @@ const userHasPermission = async (user: any, transaction: string): Promise<boolea
             return await checkTransaction(user.roleIds, transaction);
         }
     } else if (user.type == 'pxp-old') {
-        return true;
+        const query = `
+            SELECT po_administrador, po_habilitar_log, po_tiene_permisos, po_id_subsistema
+            FROM pxp.f_verifica_permisos($1, $2, '', NULL, NULL);
+        `;
+
+        const results = await getManager().query(query, [user.userId, transaction]);
+        
+        const {
+            po_administrador: isAdmin,
+            po_habilitar_log: enableLog,
+            po_tiene_permisos: hasAccess,
+            po_id_subsistema: idSubsistema
+          } = results[0];
+        return hasAccess as boolean;
+          
     } else {
         return false;
     }

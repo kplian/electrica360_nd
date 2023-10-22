@@ -1,5 +1,5 @@
 
-import { EntityManager, getManager } from 'typeorm';
+import { EntityManager, getManager, MoreThan, IsNull } from 'typeorm';
 import {
     Controller, Log, Post, ReadOnly, PxpError, Get, Authentication
 } from '@pxp-nd/core';
@@ -9,7 +9,7 @@ import {
 import { validPassword, validPasswordPxpOld } from '../helpers/Password'
 import { getEnv } from '../../../helpers/Env';
 import * as jwt from 'jsonwebtoken';
-import UserPxp from '../../electrica360_nd/entity/User'
+import UserPxp from '../../electrica360_nd/entity/Usuario'
 const jwtSecret = getEnv('SECRET') as string;
 const pxpUserExpiresIn = getEnv('PXP_USER_EXPIRES_IN') as string;
 
@@ -22,7 +22,22 @@ class Login extends Controller {
     @Authentication(false)
     async  pxp(params: Record<string, unknown>): Promise<any> {
         let isValid = false;
-        const user = await UserPxp.findOne({ username: params.username as string });
+
+        const user = await UserPxp.findOne({
+            where: [
+              {
+                expiration: MoreThan(new Date()),
+                status: "activo",
+                username: params.username as string,
+              },
+              {
+                expiration: IsNull(),
+                status: "activo",
+                username: params.username as string,
+              },
+            ],
+          });
+          
         if (user) {
             isValid = validPasswordPxpOld(params.password as string, user.password as string);
         }
@@ -49,8 +64,22 @@ class Login extends Controller {
     @Authentication(false)
     async  local(params: Record<string, unknown>, manager: EntityManager): Promise<any> {
         let isValid = false;
-        const user = await entities.User.findOne({ username: params.username as string });
-        console.log(user);
+        
+        const user = await entities.User.findOne({
+            where: [
+              {
+                expiration: MoreThan(new Date()),
+                isActive: true,
+                username: params.username as string,
+              },
+              {
+                expiration: IsNull(),
+                isActive: true,
+                username: params.username as string,
+              },
+            ],
+          });
+        
         if (user) {
             isValid = validPassword(params.password as string, <string>user.hash, <string>user.salt);
         }
