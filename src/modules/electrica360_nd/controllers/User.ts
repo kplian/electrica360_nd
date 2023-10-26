@@ -19,7 +19,7 @@ class User extends Controller {
 
     @Post()
     @ReadOnly(false)
-    @Log(false)
+    @Log(true)
     //@Permission(true)
     async  add(params: Record<string, unknown>, manager: EntityManager): Promise<any> {
         const roles = params.roles as Array<{ id: number, name: string }>;
@@ -110,7 +110,7 @@ class User extends Controller {
 
     @Post()
     @ReadOnly(false)
-    @Log(false)
+    @Log(true)
     //@Permission(true)
     async  modify(params: Record<string, unknown>, manager: EntityManager): Promise<any> {
         const roles = params.roles as Array<{ id: number, name: string }>;
