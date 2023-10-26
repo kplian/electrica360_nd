@@ -8,8 +8,12 @@
  ***************************************************************************/
  
 import { EntityManager, getConnection , getManager, In, IsNull } from 'typeorm';
-const  xmlParser = require('xml2json');
+import { XMLParser } from "fast-xml-parser";
 class Driver {
+    private connectionName: string;
+    constructor(connectionName?: string) {
+        this.connectionName = connectionName || 'default';
+    }
 
     manageError (xmlString : string, overWriteError: boolean = false) {
 
@@ -18,18 +22,16 @@ class Driver {
         console.log('manageError manageError manageError manageError manageError manageError manageError ') 
 
         let xmlString3 = `<?xml version="1.0" encoding="UTF-8"?><TestScenario>${xmlString}</TestScenario>`;
+        const parser = new XMLParser();
+        let  json =   parser.parse(xmlString3.trim() );
 
-        console.log(3 ,xmlString3)
-
-        let  json =   xmlParser.toJson(xmlString3.trim() )
-
-        console.log('JSON' , json)
+        
         if(overWriteError ){
             console.log('overWriteError  -->', overWriteError)
             console.log('INICIA JSON ')
             console.log(json)
             console.log('TERMINA JSON ')
-            return JSON.parse(json)
+            return json;
         } else {
             console.log('overWriteError  -->', overWriteError)
             console.log('INICIA JSON ')
@@ -37,7 +39,7 @@ class Driver {
             console.log('TERMINA JSON ')
             return {
                 success: false,
-                response: JSON.parse(json)
+                response: json,
             }
         }
 
@@ -45,7 +47,7 @@ class Driver {
     }
 
     async callSEL( configRequest : any  ): Promise<unknown> {
-        const dbErpConnection = getConnection('erp');
+        const dbErpConnection = getConnection(this.connectionName);
         try {
             let countResponse;
             let counter = 0;
@@ -55,19 +57,19 @@ class Driver {
 
             //CON LOS SEL NECESITAMOS CORRER EL COUNT PREVIAMENTE
             if(configRequest.countTrasaction) {
-                countResponse = await dbErpConnection.query(`select  pxp.midle_sel('${JSON.stringify({...configRequest, transaction: configRequest.countTrasaction } )}')`);
+                countResponse = await dbErpConnection.query(`select  f_midle_sel('${JSON.stringify({...configRequest, transaction: configRequest.countTrasaction } )}')`);
                 swCounter = true;
 
-                if(countResponse[0].midle_sel) {
-                    if(countResponse[0].midle_sel.SQLERRM  ) {
+                if(countResponse[0].f_midle_sel) {
+                    if(countResponse[0].f_midle_sel.SQLERRM  ) {
                         //return this.manageError (countResponse[0].midle_sel.SQLERRM, !!configRequest.overWriteError);
-                        return this.manageError (countResponse[0].midle_sel.SQLERRM);
+                        return this.manageError (countResponse[0].f_midle_sel.SQLERRM);
                     }
 
                     if(countResponse.length > 0){
-                        console.log('countResponse', countResponse[0].midle_sel)
-                        counter = countResponse[0].midle_sel[0].count;
-                        console.log('x' , counter , countResponse[0].midle_sel[0] )
+                        console.log('countResponse', countResponse[0].f_midle_sel)
+                        counter = countResponse[0].f_midle_sel[0].count;
+                        console.log('x' , counter , countResponse[0].f_midle_sel[0] )
                     }
                 }
             }
@@ -78,28 +80,28 @@ class Driver {
             if(counter > 0 || !swCounter) {
 
                 console.log('XXXXXXXXX')
-                const query =  `select  pxp.midle_sel('${JSON.stringify(configRequest)}')`;
+                const query =  `select  f_midle_sel('${JSON.stringify(configRequest)}')`;
                 console.log('QUERY -->' , query)
                 const response = await dbErpConnection.query(query);
 
                 console.log('response ===> ' , response)
 
-                if(response[0].midle_sel) {
+                if(response[0].f_midle_sel) {
 
-                    if(response[0].midle_sel.SQLERRM) {
+                    if(response[0].f_midle_sel.SQLERRM) {
 
-                        console.log('ERROR EN LA TRASACCION ==================> ', response[0].midle_sel)
-                         return this.manageError (response[0].midle_sel.SQLERRM , !!configRequest.overWriteError);
+                        console.log('ERROR EN LA TRASACCION ==================> ', response[0].f_midle_sel)
+                         return this.manageError (response[0].f_midle_sel.SQLERRM , !!configRequest.overWriteError);
 
                     }  else {
 
                         if(swCounter){
                             return {
                                 total: counter,
-                                datos:  response[0].midle_sel
+                                datos:  response[0].f_midle_sel
                             };
                         } else {
-                            return  response[0].midle_sel ;
+                            return  response[0].f_midle_sel ;
                         }
 
                     }
@@ -145,10 +147,10 @@ class Driver {
         console.log('+++++++++++++++++++++++++++++++++++++++')
 
         // listarAfiliadoOficina
-        const dbErpConnection = getConnection('erp');
+        const dbErpConnection = getConnection(this.connectionName);
         try {
 
-            const queryString = `select  pxp.f_midle_crud('${JSON.stringify(configRequest)}')`;
+            const queryString = `select  f_midle_crud('${JSON.stringify(configRequest)}')`;
 
             console.log('queryString' , queryString);
 
@@ -162,12 +164,13 @@ class Driver {
                     console.log(2222)
                     let xmlString: string = response[0].f_midle_crud.SQLERRM;
                     let xmlString3 = `<?xml version="1.0" encoding="UTF-8"?><TestScenario>${xmlString}</TestScenario>`;
-                    let  json =   xmlParser.toJson(xmlString3.trim() )
+                    const parser = new XMLParser();
+                    let  json =   parser.parse(xmlString3.trim() );
                     console.log(3333)
 
                     return {
                         success: false,
-                        response: JSON.parse(json)
+                        response: json,
                     }
                 }  else {
                     console.log(4444 )

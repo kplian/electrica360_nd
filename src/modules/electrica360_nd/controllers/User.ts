@@ -198,35 +198,6 @@ class User extends Controller {
         }
     }
 
-    /*@Post()
-    @ReadOnly(true)
-    @Log(true)
-    //@Permission(true)
-    async  insertDepto(params: Record<string, unknown>): Promise<any> {
-        const configRequest = {
-            procedure: 'param.ft_depto_ime',
-            transaction: 'PM_DEPPTO_INS',
-            userId: this.user.userId as number,
-            createParameters: [
-                { name: '_nombre_usuario_ai', value: 'test', type: 'varchar' },
-                { name: '_id_usuario_ai', value: this.user.userId, type: 'int4' },
-                { name: 'id_entidad', value: params.id_entidad, type: 'int4' },
-                { name: 'modulo', value: params.modulo, type: 'varchar' },
-                { name: 'prioridad', value: params.prioridad, type: 'int4' },
-                { name: 'id_lugares', value: params.id_lugares, type: 'varchar' },
-                { name: 'nombre_corto', value: params.nombre_corto, type: 'varchar' },
-                { name: 'nombre', value: params.nombre, type: 'varchar' },
-                { name: 'id_subsistema', value: params.id_subsistema, type: 'int4' },
-                { name: 'codigo', value: params.codigo  , type: 'varchar' }
-            ]
-        };
-        console.log(Driver);
-        //const resp = await Driver.callCRUD(configRequest);
-        //console.log('resp in controoler depto' , resp);
-        //return resp;
-        return {success: true};
-    }*/
-
     @Post()
     @ReadOnly(false)
     @Log(true)
