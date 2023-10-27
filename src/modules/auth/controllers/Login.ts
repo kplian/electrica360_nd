@@ -97,6 +97,14 @@ class Login extends Controller {
         
         return { token };
     }
+
+    @Get()
+    @ReadOnly(true)
+    @Log(true)
+    @Authentication(true)
+    async  me(params: Record<string, unknown>): Promise<any> {
+      return { ...this.user };
+    }
 }
 
 export default Login;

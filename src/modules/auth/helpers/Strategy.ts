@@ -33,7 +33,7 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (jwtPayload: any, done: any) => 
                   ],
               }).then((user: any) => {
                 if (user) {
-                    done(null, {...user, type: jwtPayload.type });
+                    done(null, {userId: user.userId, username: user.username, expiration: user.expiration, status: user.status, type: jwtPayload.type });
                 } else {
                     done(null, false);
                 }
@@ -55,7 +55,7 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (jwtPayload: any, done: any) => 
                   ],
               }).then((user: any) => {
                 if (user) {
-                    done(null, {...user, type: jwtPayload.type });
+                    done(null, {userId: user.userId, username: user.username, expiration: user.expiration, status: user.status, type: jwtPayload.type });
                 } else {
                     done(null, false);
                 }
