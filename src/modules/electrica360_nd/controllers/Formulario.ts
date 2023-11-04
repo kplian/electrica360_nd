@@ -2,8 +2,9 @@
 import {
     Controller, Log, Post, ReadOnly, Get, Permission, PxpError
 } from '@pxp-nd/core';
-
+import { EntityManager, getManager } from 'typeorm';
 import Driver  from '../../../helpers/Driver';
+import { isExcelFile } from '../helpers/Files';
 
 class Formulario extends Controller {
 
@@ -47,6 +48,28 @@ class Formulario extends Controller {
 
         const resp = await driver.callSEL(configRequest);
         return resp;
+    }
+
+    @Post()
+    @ReadOnly(false)
+    @Log(true)
+    //@Permission(true)
+    async  uploadFile(params: Record<string, unknown>, manager: EntityManager): Promise<any> {
+        const folder = './upload_folder/forms/';
+        
+        
+        
+        let excel : any  = params.file;
+        const extension = isExcelFile(excel);
+        if (!extension) {
+            throw new PxpError(400, `Archivo invalido`);
+        }
+        const filename = new Date().valueOf() + '.' + extension;
+        console.log(filename);
+        let x = await excel.mv(folder + filename);
+        return { success: true, extension };
+
+
     }
 
 

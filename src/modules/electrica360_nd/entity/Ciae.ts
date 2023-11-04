@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
 import FuncionarioCiae from './FuncionarioCiae';
+import Formulario from './Formulario';
 
 @Entity({ name: 'tciae', schema: 'ele' })
 export default class Ciae extends BaseEntity {
@@ -32,4 +33,7 @@ export default class Ciae extends BaseEntity {
 
   @OneToMany(() => FuncionarioCiae, funcionarioCiae => funcionarioCiae.ciae)
   funcionarioCiae: FuncionarioCiae[];
+
+  @OneToMany(() => Formulario, formulario => formulario.ciae)
+  formularios: Formulario[];
 }
