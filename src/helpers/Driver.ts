@@ -5,6 +5,7 @@
  ***************************************************************************
  ISSUE      DATE          AUTHOR        DESCRIPTION
  0        24/07/2022       RAC         File creation
+ 1        02/1/2023        RAC         filter null value in parameters  OJO talvez nos traiga algun problema en otro  lado
  ***************************************************************************/
  
 import { EntityManager, getConnection , getManager, In, IsNull } from 'typeorm';
@@ -53,6 +54,8 @@ class Driver {
             let counter = 0;
             let swCounter = false;
             let data = [];
+
+            configRequest.createParameters = configRequest.createParameters.filter((parameter: any) => parameter.value !== undefined);
             console.log('JSON.stringify(configRequest)' , JSON.stringify(configRequest))
 
             //CON LOS SEL NECESITAMOS CORRER EL COUNT PREVIAMENTE
@@ -149,6 +152,10 @@ class Driver {
         // listarAfiliadoOficina
         const dbErpConnection = getConnection(this.connectionName);
         try {
+
+            configRequest.createParameters = configRequest.createParameters.filter((parameter: any) => parameter.value !== undefined);
+
+            console.log('configRequest.createParameters' , configRequest.createParameters);
 
             const queryString = `select  f_midle_crud('${JSON.stringify(configRequest)}')`;
 
