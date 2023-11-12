@@ -1,4 +1,5 @@
 dist/
+upload_folder/
 node_modules/
 .yalc/
 yalc.lock

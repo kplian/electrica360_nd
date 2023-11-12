@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import TipoFormulario from './TipoFormulario';
+import TipoColumna from './TipoColumna';
 
 
 @Entity({ name: 'ttabla', schema: 'wf' })
@@ -69,5 +70,8 @@ export default class Tabla extends BaseEntity {
 
   @OneToMany(() => TipoFormulario, tipoFormulario => tipoFormulario.tabla)
   tipoFormularios: TipoFormulario[];
+
+  @OneToMany(() => TipoColumna, tipoColumna => tipoColumna.tabla)
+  columnas: TipoColumna[];
 
 }
