@@ -7,6 +7,8 @@ import {
     PrimaryGeneratedColumn,
     Column, AfterLoad
 } from 'typeorm';
+import DemoPayment from './DemoPayment';
+
 
 @Entity({ name: 'tdemo_customer', schema: 'public' })
 export default class DemoCustomer extends BaseEntity {
@@ -22,4 +24,8 @@ export default class DemoCustomer extends BaseEntity {
 
     @Column({ name: 'code', type: 'varchar', length: 100 })
     code: string;
+
+    @OneToMany(() => DemoPayment, demoPayment => demoPayment.member )
+    DemoPayment: DemoPayment[];
+
 }
