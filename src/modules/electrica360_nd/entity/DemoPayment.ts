@@ -1,6 +1,5 @@
 import {
     OneToMany,
-    OneToOne,
     JoinColumn,
     ManyToOne,
     BaseEntity,
@@ -28,14 +27,8 @@ export default class DemoPayment extends BaseEntity {
     @Column({ name: 'status', type: 'varchar', length: 100 })
     status: string;
 
-
-    @OneToOne(() => DemoCustomer, {
-        eager: true,
-        cascade: true
-    })
+    @ManyToOne(() => DemoCustomer, demoCustomer => demoCustomer.DemoPayment)
     @JoinColumn({ name: 'id_demo_customer' })
-    template: DemoCustomer;
-
-
+    demoCustomer: DemoCustomer;
 
 }
