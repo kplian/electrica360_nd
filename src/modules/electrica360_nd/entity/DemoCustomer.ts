@@ -25,7 +25,7 @@ export default class DemoCustomer extends BaseEntity {
     @Column({ name: 'code', type: 'varchar', length: 100 })
     code: string;
 
-    @OneToMany(() => DemoPayment, demoPayment => demoPayment.member )
+    @OneToMany(() => DemoPayment, demoPayment => demoPayment.demoCustomer )
     DemoPayment: DemoPayment[];
 
 }
