@@ -20,7 +20,7 @@ export default class DemoPayment extends BaseEntity {
     @Column({ name: 'amount', type: 'numeric' })
     amount: number;
 
-    @Column({ name: 'month', type: 'int', length: 100 })
+    @Column({ name: 'month', type: 'int' })
     month: string;
 
     @Column({ name: 'status', type: 'varchar', length: 100 })
