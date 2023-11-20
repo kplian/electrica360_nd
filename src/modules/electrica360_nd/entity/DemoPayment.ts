@@ -27,7 +27,9 @@ export default class DemoPayment extends BaseEntity {
     @Column({ name: 'status', type: 'varchar', length: 100 })
     status: string;
 
-    @ManyToOne(() => DemoCustomer, demoCustomer => demoCustomer.DemoPayment)
+    @ManyToOne(() => DemoCustomer, demoCustomer => demoCustomer.DemoPayment, {
+        eager: true
+    })
     @JoinColumn({ name: 'id_demo_customer' })
     demoCustomer: DemoCustomer;
 
