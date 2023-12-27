@@ -18,6 +18,7 @@ const authenticateJWT = (req: express.Request, res: express.Response, next: expr
     })(req, res, next);
   } else {
     next();
+    //res.status(401).json({ error: 'Invalid Token' });
   }
 } 
 

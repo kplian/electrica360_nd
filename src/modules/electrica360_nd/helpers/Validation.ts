@@ -12,7 +12,7 @@ export async function hasErrorExcel(inputFilePath: string, configs: any, catalog
   const uniqueName: string = uuidv4();
   const workbook = new ExcelJS.Workbook();
   const readStream = fs.createReadStream(inputFilePath);
-  const writeStream = fs.createWriteStream(`err-${folder}${uniqueName}.txt`);
+  const writeStream = fs.createWriteStream(`${folder}err-${uniqueName}.txt`);
   await workbook.xlsx.read(readStream);
   const worksheet: ExcelJS.Worksheet | undefined = workbook.worksheets[0];
   let fileWritten = false;
@@ -62,7 +62,7 @@ export async function hasErrorExcel(inputFilePath: string, configs: any, catalog
       type: 'forms'
     }
   } else {
-    fs.unlink(`${folder}${uniqueName}.txt`, () => {
+    fs.unlink(`${folder}err-${uniqueName}.txt`, () => {
       console.log('El archivo se eliminó porque no se escribió ninguna fila.');
     });
   }
@@ -111,11 +111,12 @@ const validateNumber = (value: any, label: string, column: number): boolean|stri
 }
 
 const validateCatalogo = (value: any, label: string, catalog: any[], column: number): boolean | string => {
+  
   // Verifica que el valor sea un string
   if (typeof value !== 'string') {
       return `El valor en la columna ${column} (${label}) no es un string.`;
   }
-  const found = catalog.find((item: any) => item.codigo === value);
+  const found = catalog.find((item: any) => item.descripcion === value);
   if (found) {
       return false;
   }
@@ -124,6 +125,7 @@ const validateCatalogo = (value: any, label: string, catalog: any[], column: num
 };
 
 const validateBoolean = (value: any, label: string, column: number): boolean|string => {
+  console.log('value',value);
   if (typeof value === 'boolean') {
     return false;
   } else if (typeof value === 'string' && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {

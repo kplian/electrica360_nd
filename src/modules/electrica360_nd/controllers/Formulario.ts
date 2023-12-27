@@ -88,7 +88,7 @@ class Formulario extends Controller {
             
             if (config.formComboRec) {
                 const formConfigObj = JSON.parse(config.formSobreescribeConfig)
-                const sqlQuery = `  SELECT c.codigo 
+                const sqlQuery = `  SELECT c.descripcion 
                                     FROM param.tcatalogo_tipo ct 
                                     inner join param.tcatalogo c ON c.id_catalogo_tipo = ct.id_catalogo_tipo  
                                     WHERE ct.nombre = $1`;
