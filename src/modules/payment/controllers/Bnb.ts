@@ -59,8 +59,8 @@ class Bnb extends Controller {
   @Authentication(false)
   async updateCredentials(params: any): Promise<unknown> {
     const getToken: any = await this.token({
-      "accountId": "YnUWAiCFKdvsBbEAHas1OQ==", // Tu accountId proporcionado por el BNB
-      "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
+      "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
+      "authorizationId": "gD36yGxiV5Krio/DqApRMQ==" // Tu authorizationId proporcionado por el BNB
     });
     console.log('getToken',getToken)
 
@@ -96,7 +96,7 @@ class Bnb extends Controller {
   async generateQR(params: any): Promise<any> {
     const folder = './upload_folder/qr/';
     const getToken: any = await this.token({
-      "accountId": "YnUWAiCFKdvsBbEAHas1OQ==", // Tu accountId proporcionado por el BNB
+      "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
       "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
     });
     
@@ -130,7 +130,7 @@ class Bnb extends Controller {
   @Authentication(false)
   async getGeneratedQRList(params: any): Promise<unknown> {
     const getToken: any = await this.token({
-      "accountId": "YnUWAiCFKdvsBbEAHas1OQ==", // Tu accountId proporcionado por el BNB
+      "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
       "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
     });
 
@@ -159,7 +159,7 @@ class Bnb extends Controller {
   @Authentication(false)
   async getQRStatus(params: any): Promise<unknown> {
     const getToken: any = await this.token({
-      "accountId": "YnUWAiCFKdvsBbEAHas1OQ==", // Tu accountId proporcionado por el BNB
+      "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
       "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
     });
     console.log(getToken);
@@ -188,7 +188,7 @@ class Bnb extends Controller {
   @Authentication(false)
   async cancelQR(params: any): Promise<unknown> {
     const getToken: any = await this.token({
-      "accountId": "YnUWAiCFKdvsBbEAHas1OQ==", // Tu accountId proporcionado por el BNB
+      "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
       "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
     });
 
