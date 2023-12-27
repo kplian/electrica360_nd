@@ -97,7 +97,7 @@ class Bnb extends Controller {
     const folder = './upload_folder/qr/';
     const getToken: any = await this.token({
       "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
-      "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
+      "authorizationId": "gD36yGxiV5Krio/DqApRMQ==" // Tu authorizationId proporcionado por el BNB
     });
     
     const url = 'http://test.bnb.com.bo/QRSimple.API/api/v1/main/getQRWithImageAsync';
@@ -131,7 +131,7 @@ class Bnb extends Controller {
   async getGeneratedQRList(params: any): Promise<unknown> {
     const getToken: any = await this.token({
       "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
-      "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
+      "authorizationId": "gD36yGxiV5Krio/DqApRMQ==" // Tu authorizationId proporcionado por el BNB
     });
 
     const url = 'http://test.bnb.com.bo/QRSimple.API/api/v2/main/getQRbyGenerationDateAsync';
@@ -160,7 +160,7 @@ class Bnb extends Controller {
   async getQRStatus(params: any): Promise<unknown> {
     const getToken: any = await this.token({
       "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
-      "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
+      "authorizationId": "gD36yGxiV5Krio/DqApRMQ==" // Tu authorizationId proporcionado por el BNB
     });
     console.log(getToken);
     const url = 'http://test.bnb.com.bo/QRSimple.API/api/v1/main/getQRStatusAsync';
@@ -189,7 +189,7 @@ class Bnb extends Controller {
   async cancelQR(params: any): Promise<unknown> {
     const getToken: any = await this.token({
       "accountId": "WCqC2jmem25wzLzgVTSDIg==", // Tu accountId proporcionado por el BNB
-      "authorizationId": "Mund0libre123$*" // Tu authorizationId proporcionado por el BNB
+      "authorizationId": "gD36yGxiV5Krio/DqApRMQ==" // Tu authorizationId proporcionado por el BNB
     });
 
     const url = 'http://test.bnb.com.bo/QRSimple.API/api/v1/main/CancelQRByIdAsync';
